@@ -7,7 +7,7 @@ const AddPokemonsAction = (pokemon) => (dispatch, getState) => {
     if (!hasPoke && pokemon !== {}) {
         dispatch({
             type: "ADD_POKEMONS",
-            payload: [pokemon, ...pokemons],
+            payload: [...pokemons, pokemon],
         })
     }
 }
