@@ -1,27 +1,23 @@
-import React from 'react';
-import { List } from '@mui/material'
-import { PokemonItem } from '../itemList/index.js'
+import { useEffect, useState } from 'react';
+import { List } from '@mui/material';
+import { PokemonItem } from '../itemList/index.js';
 import './list.css';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const PokemonList = () => {
-    const pokemon = {
-        img: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
-        nome: 'Charmander',
-        tipo: 'Fogo',
-        habilidade: 'Bola de fogo, Cuspida Invertida, Fogo Louco, Queimada Marota',
-        estatisticas: {
-            poder: '1000 power',
-            level: '189',
-            força: '400 de poder',
-            idade: '5 anos'
+    const Pokemons = useSelector((state) => state.Pokemons)
+    const { pokemons } = Pokemons
+
+    const [subsetPokeList, setSubsetPokeList] = useState(null)
+
+    useEffect(() => {
+        if (pokemons.length > 0) {
+            const subset = pokemons.slice(0, 10)
+            setSubsetPokeList(subset)
         }
-    }
-    function generate() {
-        return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) =>
-            <PokemonItem key={value} itemIndex={value} item={pokemon}/>,
-        )
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pokemons])
 
   return (
     <div className='List-box'> 
@@ -31,7 +27,11 @@ const PokemonList = () => {
                 'max-height: ': '10%',
                 overflow: 'auto'
             }}>
-            {generate()}
+            {
+                subsetPokeList && subsetPokeList.map((item, index) => {
+                    return <PokemonItem key={item.id} itemIndex={index} item={item}/>
+                })
+            }
         </List>       
     </div>
   );

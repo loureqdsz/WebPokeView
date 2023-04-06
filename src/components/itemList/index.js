@@ -1,22 +1,47 @@
-import { useState } from 'react';
-import { ListItemButton, ListItemText, ListItemAvatar, Avatar } from '@mui/material'
-import { ItemDescription } from '../itemDescription/index.js'
-import { ModalInformation } from '../modal/index.js'
+import { useEffect, useState } from 'react';
+import { ListItemButton, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
+import { ItemDescription } from '../itemDescription/index.js';
+import { ModalInformation } from '../modal/index.js';
 import './itemList.css';
 
 
 const PokemonItem = ({ key, itemIndex, item }) => {
-    const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [pokemon, setPokemon] = useState(null)
+
+  // ----------- Initializing component ------------------------
+
+  useEffect(() => {
+    if (pokemon === null) {
+      fetch(
+        item.url, {
+            method: 'GET'
+        }
+        ).then((res) => {
+            if (res.status) {
+                return res.json()
+            }
+        }).then((data) => {
+            if (!data || data.error) {
+                console.log('Dados do pokemon nao foram obtidos')
+                return
+            }
+            setPokemon(data)
+        })
+    }
+  })
+
+  // ---------------- Handle Functions ------------------------------
 
   const handleClickOpen = () => {
-    console.log('Item -> ', itemIndex, ' foi CLICADO')
     setOpen(true);
   };
 
   const handleClose = (value) => {
-    console.log('Fechando modal do item -> ', itemIndex)
     setOpen(false);
   };
+
+  // ----------------------------------------------------------------
 
   return (
     <div className='Item-Box'>
@@ -32,14 +57,14 @@ const PokemonItem = ({ key, itemIndex, item }) => {
         >
             <ListItemAvatar>
                 <Avatar>
-                    <img src={item.img} className="Pokemon-Image" alt="PokemonAvatarImage" />
+                    <img src={pokemon?.sprites['front_default']} className="Pokemon-Image" alt="PokemonAvatarImage" />
                 </Avatar>
             </ListItemAvatar>
             <ListItemText>
-                <ItemDescription item={item}/>
+                <ItemDescription item={pokemon}/>
             </ListItemText>
         </ListItemButton>
-        <ModalInformation onClose={handleClose} open={open} item={item}/>
+        <ModalInformation onClose={handleClose} open={open} item={pokemon}/>
     </div>
   );
 }
