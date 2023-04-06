@@ -1,0 +1,47 @@
+.Item-Description-Container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.Description-Container{
+    display: flex;
+}
+
+.Text-Container {
+    font-family: "Gill Sans", sans-serif;
+    margin-right: 40px;
+}
+
+.Label {
+    display: block;
+    font-size: 12px;
+}
+
+.Label-Description {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(90, 89, 89);
+}
+
+.More-Information .Label-Description {
+    color: #0a95c7
+}
+
+.Label-Click {
+    display: flex;
+}
+
+@media (max-width: 450px) {
+    .Item-Description-Container{
+        display: block;
+    }
+    
+    .Description-Container{
+        display: block;
+    }
+
+    .Text-Container {
+        font-family: "Gill Sans", sans-serif;
+        margin-bottom: 6px;
+    }
+}
