@@ -9,15 +9,15 @@ const ItemDescription = ({ item }) => {
             <div className='Description-Container'>
                 <div className="Text-Container">
                     <span className="Label">Pokemon</span>
-                    <span className="Label-Description">{item.nome}</span>
+                    <span className="Label-Description">{item.name}</span>
                 </div>
                 <div className="Text-Container">
                     <span className="Label">Tipo</span>
-                    <span className="Label-Description">{item.tipo}</span>
+                    <span className="Label-Description">{item?.tipo}</span>
                 </div>
                 <div className="Text-Container">
                     <span className="Label">Habilidades</span>
-                    <span className="Label-Description">{item.habilidade}</span>
+                    <span className="Label-Description">{item?.habilidade}</span>
                 </div>
             </div>
             <div className="More-Information">

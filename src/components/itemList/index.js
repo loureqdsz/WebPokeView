@@ -32,7 +32,7 @@ const PokemonItem = ({ key, itemIndex, item }) => {
         >
             <ListItemAvatar>
                 <Avatar>
-                    <img src={item.img} className="Pokemon-Image" alt="PokemonAvatarImage" />
+                    <img src={item?.img} className="Pokemon-Image" alt="PokemonAvatarImage" />
                 </Avatar>
             </ListItemAvatar>
             <ListItemText>
