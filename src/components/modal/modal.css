@@ -1,0 +1,33 @@
+.Modal-Container{
+    display: block;
+    max-width: 50vh;
+    max-height: 60vh;
+    padding: 3vh;
+}
+
+.Modal-Title {
+    font-size: 22px;
+    color: #0F84AE;
+    margin-bottom: 2px;
+}
+
+.Separator {
+    display: flex;
+    background-color: #0F84AE;
+    height: 1px;
+    margin-bottom: 15px;
+}
+
+.Modal-Content {
+    margin-bottom: 10px;
+}
+
+.Text-Title {
+    display: flex;
+}
+
+.Close-Button{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}

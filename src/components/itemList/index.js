@@ -1,17 +1,27 @@
+import { useState } from 'react';
 import { ListItemButton, ListItemText, ListItemAvatar, Avatar } from '@mui/material'
 import { ItemDescription } from '../itemDescription/index.js'
+import { ModalInformation } from '../modal/index.js'
 import './itemList.css';
 
 
-const PokemonItem = ({ key, itemIndex }) => {  
-  const handleListItemClick = (index) => {
-    console.log('Item -> ', index, ' foi CLICADO')
-  }
+const PokemonItem = ({ key, itemIndex, item }) => {
+    const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    console.log('Item -> ', itemIndex, ' foi CLICADO')
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    console.log('Fechando modal do item -> ', itemIndex)
+    setOpen(false);
+  };
 
   return (
     <div className='Item-Box'>
         <ListItemButton
-            onClick={() => handleListItemClick(itemIndex)}
+            onClick={handleClickOpen}
             sx={{
                 backgroundColor: (itemIndex % 2 === 0) ? '##f5f5f5' : '#edecec',
                 ":hover": {
@@ -22,13 +32,14 @@ const PokemonItem = ({ key, itemIndex }) => {
         >
             <ListItemAvatar>
                 <Avatar>
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" className="Pokemon-Image" alt="PokemonAvatarImage" />
+                    <img src={item.img} className="Pokemon-Image" alt="PokemonAvatarImage" />
                 </Avatar>
             </ListItemAvatar>
             <ListItemText>
-                <ItemDescription />
+                <ItemDescription item={item}/>
             </ListItemText>
         </ListItemButton>
+        <ModalInformation onClose={handleClose} open={open} item={item}/>
     </div>
   );
 }

@@ -2,22 +2,22 @@ import './itemDescription.css';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
 
-const ItemDescription = () => {
+const ItemDescription = ({ item }) => {
   return (
     <>
         <div className='Item-Description-Container'>
             <div className='Description-Container'>
                 <div className="Text-Container">
                     <span className="Label">Pokemon</span>
-                    <span className="Label-Description">Pikachu</span>
+                    <span className="Label-Description">{item.nome}</span>
                 </div>
                 <div className="Text-Container">
                     <span className="Label">Tipo</span>
-                    <span className="Label-Description">Elétrico</span>
+                    <span className="Label-Description">{item.tipo}</span>
                 </div>
                 <div className="Text-Container">
                     <span className="Label">Habilidades</span>
-                    <span className="Label-Description">Choque forte, Choque louco, Chore aquatico</span>
+                    <span className="Label-Description">{item.habilidade}</span>
                 </div>
             </div>
             <div className="More-Information">
