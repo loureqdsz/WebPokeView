@@ -32,8 +32,8 @@ const PokemonList = ({ searchedValue, page }) => {
     if (pokemons.length > 0) {
         const initialPart = (page === 1) ? 0 : (page*10)
         const finalPart = initialPart + 10
-        const subset = pokemons.slice(initialPart, finalPart)
-        setSubsetPokeList(subset)
+        setInitialPart(initialPart)
+        setFinalPart(finalPart)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
@@ -41,18 +41,22 @@ const PokemonList = ({ searchedValue, page }) => {
   useEffect(() => {
     const subset = pokemons.slice(initialPart, finalPart)
     setSubsetPokeList(subset)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialPart, finalPart])
   // ---------------- Handle Functions ------------------------------
 
   const handleSearch = (value) => {
     if (!value) {
-        // setSubsetPokeList(pokemons)
+        const subset = pokemons.slice(initialPart, finalPart)
+        setSubsetPokeList(subset)
         return
     }
-    const pokemonFullList = subsetPokeList
+
+    const pokemonFullList = pokemons.slice(initialPart, finalPart)
     // eslint-disable-next-line array-callback-return
     const newSubset = []
     
+    // eslint-disable-next-line array-callback-return
     pokemonFullList.map((pokemon) => {
         if (pokemon?.name.includes(value)) {
             newSubset.push(pokemon)
