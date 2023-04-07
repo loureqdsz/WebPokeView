@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { List } from '@mui/material';
 import { PokemonItem } from '../itemList/index.js';
@@ -20,22 +21,19 @@ const PokemonList = ({ searchedValue, page }) => {
           const subset = pokemons.slice(0, 10)
           setSubsetPokeList(subset)
       }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokemons])
 
   useEffect(() => {
     handleSearch(searchedValue)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchedValue])
 
   useEffect(() => {
     if (pokemons.length > 0) {
         const initialPart = (page === 1) ? 0 : (page*10)
         const finalPart = initialPart + 10
-        const subset = pokemons.slice(initialPart, finalPart)
-        setSubsetPokeList(subset)
+        setInitialPart(initialPart)
+        setFinalPart(finalPart)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
   useEffect(() => {
@@ -46,14 +44,15 @@ const PokemonList = ({ searchedValue, page }) => {
 
   const handleSearch = (value) => {
     if (!value) {
-        // setSubsetPokeList(pokemons)
+        const subset = pokemons.slice(initialPart, finalPart)
+        setSubsetPokeList(subset)
         return
     }
-    const pokemonFullList = subsetPokeList
-    // eslint-disable-next-line array-callback-return
+
+    const pokemonFullList = pokemons.slice(initialPart, finalPart)
     const newSubset = []
     
-    pokemonFullList.map((pokemon) => {
+    pokemonFullList.forEach((pokemon) => {
         if (pokemon?.name.includes(value)) {
             newSubset.push(pokemon)
         }
