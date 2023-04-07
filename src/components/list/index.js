@@ -10,6 +10,10 @@ const PokemonList = ({ searchedValue, page }) => {
   const { pokemons } = Pokemons
 
   const [subsetPokeList, setSubsetPokeList] = useState(null)
+  const [initialPart, setInitialPart] = useState(1)
+  const [finalPart, setFinalPart] = useState(1)
+
+  // ----------- Initializing component ------------------------
 
   useEffect(() => {
       if (pokemons.length > 0) {
@@ -20,7 +24,8 @@ const PokemonList = ({ searchedValue, page }) => {
   }, [pokemons])
 
   useEffect(() => {
-    console.log('Value -> ', searchedValue)
+    handleSearch(searchedValue)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchedValue])
 
   useEffect(() => {
@@ -33,7 +38,28 @@ const PokemonList = ({ searchedValue, page }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
+  useEffect(() => {
+    const subset = pokemons.slice(initialPart, finalPart)
+    setSubsetPokeList(subset)
+  }, [initialPart, finalPart])
   // ---------------- Handle Functions ------------------------------
+
+  const handleSearch = (value) => {
+    if (!value) {
+        // setSubsetPokeList(pokemons)
+        return
+    }
+    const pokemonFullList = subsetPokeList
+    // eslint-disable-next-line array-callback-return
+    const newSubset = []
+    
+    pokemonFullList.map((pokemon) => {
+        if (pokemon?.name.includes(value)) {
+            newSubset.push(pokemon)
+        }
+    })
+    setSubsetPokeList(newSubset)
+  }
 
   // ----------------------------------------------------------------
 
@@ -47,7 +73,7 @@ const PokemonList = ({ searchedValue, page }) => {
             }}>
             {
                 subsetPokeList && subsetPokeList.map((item, index) => {
-                    return <PokemonItem key={item.id} itemIndex={index} item={item}/>
+                    return <PokemonItem key={item?.id} itemIndex={index} item={item}/>
                 })
             }
         </List>       
