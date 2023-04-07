@@ -12,15 +12,4 @@ const AddPokemonsAction = (pokemon) => (dispatch, getState) => {
     }
 }
 
-const RemovePokemonsAction = (pokemonsList) => (dispatch, getState) => {
-    const {
-        Pokemons: { pokemons },
-    } = getState()
-
-    dispatch({
-        type: "REMOVE_POKEMONS",
-        payload: [pokemonsList],
-    })
-}
-
-export { AddPokemonsAction, RemovePokemonsAction }
+export { AddPokemonsAction }

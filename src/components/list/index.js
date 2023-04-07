@@ -2,22 +2,40 @@ import { useEffect, useState } from 'react';
 import { List } from '@mui/material';
 import { PokemonItem } from '../itemList/index.js';
 import './list.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
-const PokemonList = () => {
-    const Pokemons = useSelector((state) => state.Pokemons)
-    const { pokemons } = Pokemons
+const PokemonList = ({ searchedValue, page }) => {
+  const Pokemons = useSelector((state) => state.Pokemons)
+  const { pokemons } = Pokemons
 
-    const [subsetPokeList, setSubsetPokeList] = useState(null)
+  const [subsetPokeList, setSubsetPokeList] = useState(null)
 
-    useEffect(() => {
-        if (pokemons.length > 0) {
-            const subset = pokemons.slice(0, 10)
-            setSubsetPokeList(subset)
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pokemons])
+  useEffect(() => {
+      if (pokemons.length > 0) {
+          const subset = pokemons.slice(0, 10)
+          setSubsetPokeList(subset)
+      }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pokemons])
+
+  useEffect(() => {
+    console.log('Value -> ', searchedValue)
+  }, [searchedValue])
+
+  useEffect(() => {
+    if (pokemons.length > 0) {
+        const initialPart = (page === 1) ? 0 : (page*10)
+        const finalPart = initialPart + 10
+        const subset = pokemons.slice(initialPart, finalPart)
+        setSubsetPokeList(subset)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+
+  // ---------------- Handle Functions ------------------------------
+
+  // ----------------------------------------------------------------
 
   return (
     <div className='List-box'> 

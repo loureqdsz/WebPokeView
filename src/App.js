@@ -10,11 +10,14 @@ import './App.css';
 
 function App() {
   const [textBoxValue, setTextBoxValue] = useState("")
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
 
   const dispatch = useDispatch()
   const Pokemons = useSelector((state) => state.Pokemons)
   const { pokemons } = Pokemons
 
+  // ----------- Initializing component ------------------------
   useEffect(() => {
     if (pokemons.length === 0) {
       fetch(
@@ -39,10 +42,16 @@ function App() {
       console.log('Dados Carregados')
     }
   })
-
+  
   useEffect(() => {
-    console.log('Value -> ', textBoxValue)
-  }, [textBoxValue])
+    setPageCount(Math.floor(pokemons.length / 10))
+  }, [pokemons])
+
+  // ------------ Handle Functions ---------------------------
+  const handleChange = (event, value) => {
+    setPage(value)
+  }
+  // ---------------------------------------------------------
 
   return (
     <div className="App">
@@ -52,10 +61,10 @@ function App() {
           <TextBox id="search-text-box" value={textBoxValue} onChange={setTextBoxValue}/>  
         </div>
         <div className="App-Content-2">
-          <PokemonList />
+          <PokemonList searchedValue={textBoxValue} page={page} />
         </div>
         <div className="App-Content-3">          
-          <PaginationTable id="table-pagination" count="100"/>
+          <PaginationTable id="table-pagination" count={pageCount} page={page} onChange={handleChange} />
         </div>
       </div>
     </div>
